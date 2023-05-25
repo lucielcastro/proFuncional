@@ -1,23 +1,54 @@
-primo :: Int -> Bool
-primo n
-  | n < 2     = False
-  | otherwise = aux n (n-1)
-  
-aux :: Integral t => t -> t -> Bool
+--EU FIZ
+primoMercene::Int->Bool
+primoMercene n = primo (2^n - 1)
+
+aux::Int->Int->Bool
 aux n i
-  | i == 1        = True
-  | mod n i == 0  = False
-  | otherwise     = aux n(i-1)
+   |i==1 = True
+   |mod n i==0 = False
+   |otherwise = aux n (i-1)
 
-  --implementeção parcial 
-  
-pot :: Int -> Int -> Int
-pot x y
-   | y < 0 = y*(-1)
-   | y == 0 = 1
-   | otherwise = x * pot x (y-1)
+primo::Int->Bool
+primo x
+   |x==1 = False
+   |x==2 = True
+   |otherwise = aux x (x-1)
 
-primoMecen :: Int -> Bool
-primoMecen n
-   | n <= 2 = False
-   | otherwise = primoMecen()
+--MONITOR FEZ
+
+mercenne::Int->Bool
+mercenne n
+  |not (primo n) = False
+  |otherwise = auxMercene n 1
+
+nPrimo::Int->Int
+nPrimo n = contPrimo 0 2
+   where
+      contPrimo::Int->Int->Int
+      contPrimo cont num
+        |cont==n = num-1
+        |primo num = contPrimo (cont+1) (num+1)
+        |otherwise = contPrimo cont (num+1)
+
+auxMercene::Int->Int->Bool
+auxMercene num cont
+  |2^cont-1 == num = True
+  |2^cont-1 > num = False
+  |otherwise = auxMercene num (cont+1)
+
+-- MONITOR FEZ 
+-- CALCULA O ENESIMO PRIMO DE MERCENNE
+nPrimoMercene::Int->Int
+nPrimoMercene n = contMercene 0 2
+  where
+    contMercene::Int->Int->Int
+    contMercene cont num
+      |cont==n = num-1
+      |primoMercene num = contMercene (cont+1) (num+1)
+      |otherwise = contMercene cont (num+1)
+
+auxNMercene::Int->Int->Int
+auxNMercene num cont
+  |num==1 && mercenne (nPrimo cont) = nPrimo cont
+  |mercenne (nPrimo cont) = auxNMercene (num-1) (cont+1)
+  |otherwise = auxNMercene num (cont+1)

@@ -1,5 +1,4 @@
 
-
 contFat :: Int->Int->Int->Int
 contFat n y z
    |y==0 = 1
